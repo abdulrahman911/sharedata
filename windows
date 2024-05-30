@@ -1,1 +1,15 @@
+$scriptContent = @"
+\$ipAddress = "172.31.60.196"
+\$dnsServer = "irshad.dc"
+
+\$interfaceAlias = (Get-NetAdapter | Select-Object -First 1).Name
+
+# Set the IP address without default gateway
+New-NetIPAddress -InterfaceAlias \$interfaceAlias -IPAddress \$ipAddress -PrefixLength 24
+
+# Set the DNS server
+Set-DnsClientServerAddress -InterfaceAlias \$interfaceAlias -ServerAddresses \$dnsServer
+"@
+
+$scriptContent | Out-File -FilePath "C:\Path\To\configure-network.ps1"
 
